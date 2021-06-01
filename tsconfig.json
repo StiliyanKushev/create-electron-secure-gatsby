@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "allowJs": true,
+      "target": "ES5",
+      "module": "commonjs",
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "noImplicitAny": true,
+      "sourceMap": false,
+      "baseUrl": ".",
+      "outDir": ".",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+    },
+    "files": ["main-src.ts"]
+  }
+  
