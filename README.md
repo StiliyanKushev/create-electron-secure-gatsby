@@ -1,3 +1,4 @@
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -38,7 +39,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
@@ -82,16 +82,14 @@ To get a local copy up and running follow these simple steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+I've made a set of scripts that will prepare typescript files to js and compile them to bytenode jsc files. Some of the scripts also delete some files you don't need. I also modified the gatsby-node.js file and made it compile all js to jsc and make the original js files as loader files.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
+All you care about more or less would be these two commands.
+```sh
+   npm run dev // run gatsby web server and open it in electron
+   npm run pack // builds gatsby + electron (compiles to jsc) and applies asarmor.
+   ```
+Note: after running "npm run pack" and everything is finished, your finished and protected product will be in the /dest folder
 
 
 <!-- CONTACT -->
