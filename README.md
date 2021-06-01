@@ -10,7 +10,6 @@
   <p align="center">
     Electron apps made easy
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     ·
