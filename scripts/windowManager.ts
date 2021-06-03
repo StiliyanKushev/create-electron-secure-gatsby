@@ -1,8 +1,7 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, Menu } from "electron";
 import path from "path";
-const serve = require('electron-serve');
-const loadURL = serve({ directory: 'public' });
-
+import serve from 'electron-serve';
+serve({ directory: "public"});
 class PanelWindow {
     windowManager:WindowManager;
     browserWindow:BrowserWindow;
@@ -23,8 +22,15 @@ class PanelWindow {
                 devTools: this.windowManager.isDev ? true:false,
             },
             icon: this.windowManager.isDev ? path.join(process.cwd(), 'src/images/icon.png') : path.join(__dirname, '../public/icons/icon-512x512.png'),
-            show: false
+            show: false,
+            frame: wm.showMenu,
         });
+
+        if(!wm.showMenu){
+            this.browserWindow.setMenu(null);
+            Menu.setApplicationMenu(null);
+        }
+        this.browserWindow.setMenuBarVisibility(wm.showMenu);
 
         if(!this.windowManager.isDev)
         this.browserWindow.webContents.on("devtools-opened", () => { this.browserWindow.webContents.closeDevTools(); });
@@ -33,7 +39,12 @@ class PanelWindow {
             if (this.windowManager.isDev) {
                 this.browserWindow.loadURL('http://localhost:8000' + this.route);
             } else {
-                loadURL(this.browserWindow);
+                if(this.route == "/"){
+                    this.browserWindow.loadURL(`app://public/index.html`);
+                }
+                else{
+                    this.browserWindow.loadURL(`app://public${this.route}/index.html`);
+                }
             }
         }
         else{
@@ -70,9 +81,11 @@ class PanelWindow {
 class WindowManager {
     windows:Array<PanelWindow> = [];
     isDev:boolean;
+    showMenu:boolean;
 
-    constructor(isDev:boolean){
+    constructor(isDev:boolean,showMenu:boolean){
         this.isDev = isDev;
+        this.showMenu = showMenu;
     }
 
     add(name:string,width:number,height:number,route:string,show:boolean){
