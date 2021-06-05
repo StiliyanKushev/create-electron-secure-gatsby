@@ -1,12 +1,16 @@
-import { ipcMain } from 'electron';
+import {app, ipcMain } from 'electron';
 import WindowManager from './scripts/windowManager';
-const { app } = require('electron');
 
 function isDev() {
     return !app.isPackaged;
 }
 
-let windowManager: WindowManager = new WindowManager(isDev());
+if(isDev()){
+    // apply electron reload to the whole app
+    require('electron-reload')(__dirname);
+}
+
+let windowManager: WindowManager = new WindowManager(isDev(),isDev());
 
 function setup(){
    // add windows here
@@ -14,6 +18,7 @@ function setup(){
 }
 
 ipcMain.on("openWindow", (e, to) => {
+    console.log("open a window to " + to)
     windowManager.add(to,800,600,to,true);
 })
 
