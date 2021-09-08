@@ -3,7 +3,7 @@ const path = require('path');
 const cp = require('child_process');
 const killProcess = require('kill-process-by-name');
 const asar = require('asar');
-const {Asarmor, FileCrash, Trashify, Bloat} = require('asarmor');
+const {Asarmor, Trashify, Bloat} = require('asarmor');
 
 console.log('looking for the exe in the dist folder (unpacked)')
 let files = fs.readdirSync("./dist/win-unpacked");

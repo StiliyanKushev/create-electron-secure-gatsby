@@ -2,41 +2,43 @@ import { BrowserWindow, Menu } from "electron";
 import path from "path";
 import serve from 'electron-serve';
 serve({ directory: "public"});
-class PanelWindow {
-    windowManager:WindowManager;
-    browserWindow:BrowserWindow;
-    name:string;
-    width:number;
-    height:number;
-    route:string;
 
-    constructor(wm:WindowManager,name:string,width:number,height:number,route:string, show:boolean){
-        this.windowManager = wm;
-        this.name = name;
+class PanelWindow {
+    browserWindow:BrowserWindow;
+    route:string;
+    showMenu:boolean;
+    isDev:boolean;
+
+    constructor(route:string,showMenu:boolean,isDev:boolean,width:number,height:number,show:boolean){
         this.route = route;
+        this.showMenu = showMenu;
+        this.isDev = isDev;
         this.browserWindow = new BrowserWindow({
             width: width,
             height: height,
             webPreferences: {
                 nodeIntegration: true,
-                devTools: this.windowManager.isDev ? true:false,
+                devTools: this.isDev ? true:false,
             },
-            icon: this.windowManager.isDev ? path.join(process.cwd(), 'src/images/icon.png') : path.join(__dirname, '../public/icons/icon-512x512.png'),
+            icon: this.isDev ? path.join(process.cwd(), 'src/images/icon.png') : path.join(__dirname, '../public/icons/icon-512x512.png'),
             show: false,
-            frame: wm.showMenu,
+            frame: this.showMenu,
+            resizable:false,
         });
 
-        if(!wm.showMenu){
+        this.browserWindow.setResizable(false);
+        this.browserWindow.setMenuBarVisibility(this.showMenu);
+
+        if(!this.showMenu){
             this.browserWindow.setMenu(null);
             Menu.setApplicationMenu(null);
         }
-        this.browserWindow.setMenuBarVisibility(wm.showMenu);
 
-        if(!this.windowManager.isDev)
+        if(!this.isDev)
         this.browserWindow.webContents.on("devtools-opened", () => { this.browserWindow.webContents.closeDevTools(); });
 
         if(show){
-            if (this.windowManager.isDev) {
+            if (this.isDev) {
                 this.browserWindow.loadURL('http://localhost:8000' + this.route);
             } else {
                 if(this.route == "/"){
@@ -53,55 +55,22 @@ class PanelWindow {
         
         //@ts-ignore
         process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
-    
-        this.browserWindow.on('closed', () => {
-            this.close();
-        });
-    
         this.browserWindow.once('ready-to-show', () => {
             this.browserWindow.show()
         });
     }
 
     show(){
-        // TODO maybe load route here?
         this.browserWindow.show();
     }
 
-    hide(){
+    minimize(){
         this.browserWindow.minimize();
     }
 
     close(){
-        this.browserWindow = null;
-        this.windowManager.remove(this.name);
+        this.browserWindow.close();
     }
 }
 
-class WindowManager {
-    windows:Array<PanelWindow> = [];
-    isDev:boolean;
-    showMenu:boolean;
-
-    constructor(isDev:boolean,showMenu:boolean){
-        this.isDev = isDev;
-        this.showMenu = showMenu;
-    }
-
-    add(name:string,width:number,height:number,route:string,show:boolean){
-        this.windows.push(new PanelWindow(this,name,width,height,route,show));
-    }
-
-    remove(name:string){
-        let i = 0;
-        for(let w of this.windows){
-            if(w.name == name){
-                this.windows.splice(i,1);
-                break;
-            }
-            i++;
-        }
-    }
-}
-
-export default WindowManager;
+export default PanelWindow;

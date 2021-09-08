@@ -1,0 +1,21 @@
+.container{
+    width: 90%;
+    font-size: large;
+    color: #D2D2D1;
+    font-weight: 500;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.container input{
+    visibility: hidden;
+    position: absolute;
+}
+
+.img{
+    cursor: pointer;
+    width: 27px !important;
+    height: 27px;
+    margin-right: 10px;
+}

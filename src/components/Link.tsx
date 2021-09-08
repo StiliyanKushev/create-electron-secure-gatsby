@@ -24,7 +24,7 @@ class Link extends Component {
         }
     }
 
-    onClick(e:any){ // TODO
+    onClick(e:React.MouseEvent<HTMLAnchorElement>){
         e.preventDefault();
         if(this.windowAvailable){
             this.electron.ipcRenderer.send("openWindow", this.props.to);

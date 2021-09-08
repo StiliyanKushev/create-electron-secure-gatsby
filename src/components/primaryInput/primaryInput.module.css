@@ -1,0 +1,33 @@
+.input{
+    padding: 1rem;
+    background-color: #D8D8D8;
+    border: none;
+    /* text */
+    color: #2e2e2e;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 20px;    
+    box-sizing: border-box !important;       
+    /* padding-left: 60px; */
+    width: 90%;
+}
+
+.input::placeholder{
+    /* placeholder */
+    color: #747474;
+}
+
+
+.img{
+    margin-top: -40px;
+    position:relative;
+    width: 28px !important;
+    height: 30px;
+    background-size: contain;
+    top: 65px;
+    left: -100px;
+    background-color: #D8D8D8;
+    padding: 3px;
+    box-sizing: border-box;
+}

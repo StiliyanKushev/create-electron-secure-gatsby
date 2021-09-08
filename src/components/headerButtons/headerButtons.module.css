@@ -1,0 +1,36 @@
+.minimize div{
+    background-image: url("../../external/minimize.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+}
+
+.close div{
+    background-image: url("../../external/close.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+}
+
+.minimize, .close {
+    padding: 12px;
+}
+
+.minimize:hover{
+    background-color: rgba(255,255,255,0.1);
+}
+
+.close:hover{
+    background-color: rgba(255,50,50,0.8);
+}
+
+
+.container{
+    height: 50px;
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}

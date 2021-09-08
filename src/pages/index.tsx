@@ -1,5 +1,6 @@
 import React from "react"
 import { PureComponent } from "react";
+import "../global.css";
 
 import Layout from "../components/layout"
 

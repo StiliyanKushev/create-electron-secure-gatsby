@@ -1,28 +1,29 @@
-import {app, ipcMain } from 'electron';
-import WindowManager from './scripts/windowManager';
+import { app, ipcMain } from 'electron';
+import PanelWindow from './scripts/windowManager';
 
 function isDev() {
     return !app.isPackaged;
 }
+
+let mainWindow:any = null;
 
 if(isDev()){
     // apply electron reload to the whole app
     require('electron-reload')(__dirname);
 }
 
-let windowManager: WindowManager = new WindowManager(isDev(),isDev());
-
 function setup(){
-   // add windows here
-   windowManager.add("main",800,600,'/',true);
+    //mainWindow = new PanelWindow("/login",false,isDev(),360, 490,true);
+    mainWindow = new PanelWindow("/login",false,isDev(),360, 490,true);
 }
 
-ipcMain.on("openWindow", (e, to) => {
-    console.log("open a window to " + to)
-    windowManager.add(to,800,600,to,true);
+ipcMain.on("APP_OPEN_WINDOW", (e, route) => {
+    e.preventDefault();
+    new PanelWindow(route,false,isDev(),800, 600,true)
 })
 
 app.on('ready', setup);
+app.on("window-all-closed", app.quit)
 app.on('activate', function () {
-    if (windowManager === null) setup()
+    if(mainWindow == null) setup()
 });

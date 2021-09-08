@@ -3,7 +3,7 @@ const fs = require('fs');
 var killProcess = require('kill-process-by-name');
 
 const data_public = (name) => `
-require('bytenode').runBytecodeFile("../../public/${name}.jsc");
+    require('bytenode').runBytecodeFile(require('path').join(__dirname,"../../app.asar/public/${name}.jsc"));
 `
 
 async function compileJs(p,data_func){
@@ -33,9 +33,9 @@ exports.onPostBuild = async ({ reporter }) => {
     console.log("[#] Successful .jsc compilation");
 }
 
-// exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
-//     const config = getConfig()
-//     config.node = {
-//         window: 'empty',
-//     }
-// }
+exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
+    const config = getConfig()
+    config.node = {
+        fs: 'empty',
+    }
+}
