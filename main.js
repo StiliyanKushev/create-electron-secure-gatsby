@@ -10,7 +10,7 @@ v8.setFlagsFromString('--no-lazy');
 if (!fs.existsSync(path.join(__dirname,'/main-src.jsc'))) {
     bytenode.compileFile(path.join(__dirname,'/main-src.js'), path.join(__dirname,'/main-src.jsc'));
     fs.unlinkSync(path.join(__dirname,'/main-src.js'));
-    
+
     let files = fs.readdirSync(path.join(__dirname,'./scripts'));
     for (let file of files) {
         if(!file.endsWith('.js')) continue;

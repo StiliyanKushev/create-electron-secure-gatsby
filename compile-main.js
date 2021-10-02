@@ -31,14 +31,20 @@ for (let file of files) {
 }
 
 console.log(`found executable ${exeFile} running it`);
-
-cp.execFile(exeFile, [], {
-    cwd: path.join(__dirname, '/dist/unpacked/')
-});
-
 let productName = JSON.parse(fs.readFileSync("./package.json")).build.productName;
-console.log('killing ' + productName);
-killProcess(productName);
+
+if(currentOS == "win"){
+    cp.execFile(exeFile, [], {
+        cwd: path.join(__dirname, '/dist/unpacked/')
+    });
+    console.log('killing ' + productName);
+    killProcess(productName);
+}
+else if(currentOS == "linux"){
+    let child = cp.spawn(path.join(__dirname, '/dist/unpacked/') + exeFile, {detached: true})
+    console.log('killing ' + productName);
+    setTimeout(() => { process.kill(-child.pid) }, 3000)
+}
 
 setTimeout(() => {
     console.log("packing to asar");
@@ -67,7 +73,7 @@ setTimeout(() => {
                 if(fs.lstatSync(p).isDirectory()){
                     fs.rmdirSync(p, { recursive: true });
                 }
-                else{
+                else {
                     fs.unlinkSync(p);
                 }
             }
