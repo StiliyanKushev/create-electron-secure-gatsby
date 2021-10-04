@@ -8,7 +8,7 @@
   "private": false,
   "build": {
     "icon": "src/images/icon.png",
-    "productName": "KushevPanel",
+    "productName": "example",
     "files": [
       "public/**/*",
       "scripts/*.js",
@@ -33,7 +33,7 @@
     "electron": "wait-on http://localhost:8000 && electron .",
     "electron-pack": "electron-builder",
     "dev": "node predev.js && npm run build && concurrently \"npm run develop\" \"npm run electron\"",
-    "pack": "npm run build && gatsby build && npm run electron-pack && npm run compile-main"
+    "pack": "node predev.js && npm run build && gatsby build && npm run electron-pack && npm run compile-main"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",

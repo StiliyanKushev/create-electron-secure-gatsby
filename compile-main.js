@@ -16,7 +16,7 @@ else if(fs.existsSync("./dist/win-unpacked")){
 }
 
 console.log('looking for the executable in the dist folder (unpacked)');
-let exeName = JSON.parse(fs.readFileSync("./package.json")).name;
+let exeName = JSON.parse(fs.readFileSync("./package.json")).build.productName;
 let files = fs.readdirSync("./dist/unpacked");
 let exeFile;
 for (let file of files) {
